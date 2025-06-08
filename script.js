@@ -10,6 +10,7 @@ const totalBudgetDisplay = document.getElementById('totalBudget');
 const totalExpensesDisplay = document.getElementById('totalExpenses');
 const netBudgetDisplay = document.getElementById('netBudget');
 const dailyBudgetDisplay = document.getElementById('dailyBudget');
+const remainingBalanceDisplay = document.getElementById('remainingBalance');
 
 const chartCanvas = document.getElementById('expenseChart');
 let expenseChart;
@@ -54,10 +55,14 @@ function updateSummary() {
   const netBudget = Math.max(0, totalBudget - savingGoal);
   const dailyBudget = daysInMonth > 0 ? Math.max(0, (netBudget - totalExpenses) / daysInMonth) : 0;
 
+  // ยอดเงินคงเหลือ (งบที่ใช้ได้จริง - รวมค่าใช้จ่าย)
+  const remainingBalance = Math.max(0, netBudget - totalExpenses);
+
   totalBudgetDisplay.textContent = totalBudget.toLocaleString();
   totalExpensesDisplay.textContent = totalExpenses.toLocaleString();
   netBudgetDisplay.textContent = netBudget.toLocaleString();
   dailyBudgetDisplay.textContent = dailyBudget.toFixed(2);
+  remainingBalanceDisplay.textContent = remainingBalance.toLocaleString();
 
   updateChart();
 }
