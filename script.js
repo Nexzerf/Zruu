@@ -1,6 +1,3 @@
-// script.js
-
-// ค่าตัวแปร
 let expenseData = [];
 
 const monthlyBudgetInput = document.getElementById('monthlyBudget');
@@ -17,7 +14,6 @@ const dailyBudgetDisplay = document.getElementById('dailyBudget');
 const chartCanvas = document.getElementById('expenseChart');
 let expenseChart;
 
-// ฟังก์ชันหลัก
 function updateSummary() {
   const totalBudget = parseFloat(monthlyBudgetInput.value) || 0;
   const savingGoal = parseFloat(savingGoalInput.value) || 0;
@@ -28,26 +24,31 @@ function updateSummary() {
 
   const expenseItems = document.querySelectorAll('.expense-item');
 
-  expenseItems.forEach(item => {
-    const name = item.querySelector('.expense-name').value;
-    const mealCalcMode = item.querySelector('input[type="radio"][name^="mealCalc"]:checked');
-    const isAuto = mealCalcMode && mealCalcMode.value === 'auto';
-    const costs = item.querySelectorAll('.meal-cost');
-    let sum = 0;
+  expenseItems.forEach((item, idx) => {
+    const name = item.querySelector('.expense-name')?.value || 'ไม่ระบุ';
+    const mealInputs = item.querySelectorAll('.meal-cost');
+    const generalCostInput = item.querySelector('.general-cost');
+    const radio = item.querySelector('input[type="radio"]:checked');
+    let cost = 0;
 
-    if (isAuto) {
-      costs.forEach(input => {
-        sum += parseFloat(input.value || 0);
-      });
-      sum *= daysInMonth;
-    } else {
-      costs.forEach(input => {
-        sum += parseFloat(input.value || 0);
-      });
+    if (mealInputs.length > 0) {
+      if (radio?.value === 'auto') {
+        cost = 60 * 3 * daysInMonth;
+      } else {
+        let subtotal = 0;
+        mealInputs.forEach(input => {
+          subtotal += parseFloat(input.value || 0);
+        });
+        cost = subtotal * daysInMonth;
+      }
+    } else if (generalCostInput) {
+      const mode = item.querySelector(`input[name="costMode${item.dataset.id}"]:checked`)?.value;
+      let value = parseFloat(generalCostInput.value || 0);
+      cost = (mode === 'daily') ? value * daysInMonth : value;
     }
 
-    totalExpenses += sum;
-    expenseData.push({ name, cost: sum });
+    totalExpenses += cost;
+    expenseData.push({ name, cost });
   });
 
   const netBudget = Math.max(0, totalBudget - savingGoal);
@@ -61,46 +62,6 @@ function updateSummary() {
   updateChart();
 }
 
-// อัปเดตก่อน
-monthlyBudgetInput.addEventListener('input', updateSummary);
-savingGoalInput.addEventListener('input', updateSummary);
-daysInMonthInput.addEventListener('input', updateSummary);
-
-// เพิ่มหมวด
-addExpenseBtn.addEventListener('click', () => {
-  const newItem = document.createElement('div');
-  newItem.classList.add('expense-item');
-  newItem.innerHTML = `
-    <input type="text" class="expense-name" placeholder="ชื่อหมวด" />
-    <div class="meal-option">
-      <input type="radio" name="mealCalc${Date.now()}" value="manual" checked> ระบุเอง
-      <input type="radio" name="mealCalc${Date.now()}" value="auto"> คูณตามวัน
-    </div>
-    <div class="meal-costs">
-      <label>เช้า<input type="number" class="meal-cost" data-meal="เช้า" min="0" /></label>
-      <label>บ่าย<input type="number" class="meal-cost" data-meal="กลางวัน" min="0" /></label>
-      <label>เย็น<input type="number" class="meal-cost" data-meal="เย็น" min="0" /></label>
-    </div>
-    <button class="btn-remove-expense">ลบ</button>
-  `;
-
-  newItem.querySelectorAll('input[type="radio"]').forEach(input => {
-  input.addEventListener('change', updateSummary);
-});
-
-
-  newItem.querySelector('.btn-remove-expense').addEventListener('click', () => {
-    newItem.remove();
-    updateSummary();
-  });
-
-  expenseList.appendChild(newItem);
-});
-
-// แรกสุด
-updateSummary();
-
-// Chart.js
 function updateChart() {
   const labels = expenseData.map(item => item.name);
   const data = expenseData.map(item => item.cost);
@@ -113,25 +74,66 @@ function updateChart() {
       labels,
       datasets: [{
         data,
-        backgroundColor: [
-          '#00aaff', '#ffaa00', '#ff5599', '#00cc99', '#9966ff', '#ffcc00'
-        ],
+        backgroundColor: ['#3498db', '#2ecc71', '#f1c40f', '#e67e22', '#9b59b6', '#e74c3c']
       }]
     },
     options: {
       responsive: true,
       plugins: {
         legend: {
-          position: 'bottom',
-          labels: {
-            color: '#fff',
-            font: {
-              family: 'Prompt',
-              weight: '600'
-            }
-          }
+          position: 'bottom'
         }
       }
     }
   });
 }
+
+function createNewExpenseItem(id) {
+  const newItem = document.createElement('div');
+  newItem.classList.add('expense-item');
+  newItem.dataset.id = id;
+  newItem.innerHTML = `
+    <input type="text" class="expense-name" placeholder="ชื่อหมวดหมู่" />
+    <input type="number" class="general-cost" placeholder="จำนวนเงิน" min="0" />
+    <div class="cost-mode-wrapper">
+      <label><input type="radio" name="costMode${id}" value="daily" checked /> ต่อวัน</label>
+      <label><input type="radio" name="costMode${id}" value="monthly" /> ต่อเดือน</label>
+    </div>
+    <button class="btn-remove-expense">ลบ</button>
+  `;
+
+  newItem.querySelectorAll('input').forEach(input => {
+    input.addEventListener('input', updateSummary);
+    input.addEventListener('change', updateSummary);
+  });
+
+  newItem.querySelector('.btn-remove-expense').addEventListener('click', () => {
+    newItem.remove();
+    updateSummary();
+  });
+
+  return newItem;
+}
+
+monthlyBudgetInput.addEventListener('input', updateSummary);
+savingGoalInput.addEventListener('input', updateSummary);
+daysInMonthInput.addEventListener('input', updateSummary);
+
+expenseList.addEventListener('change', (e) => {
+  if (e.target.name?.startsWith('mealCalc')) {
+    const parent = e.target.closest('.expense-item');
+    const mealInputs = parent.querySelector('.meal-costs');
+    if (mealInputs) {
+      mealInputs.style.display = (e.target.value === 'auto') ? 'none' : 'flex';
+    }
+    updateSummary();
+  }
+});
+
+addExpenseBtn.addEventListener('click', () => {
+  const newId = Date.now();
+  const newItem = createNewExpenseItem(newId);
+  expenseList.appendChild(newItem);
+});
+
+updateSummary();
