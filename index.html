@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Zruu</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="/icons/32.png" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Prompt&display=swap" rel="stylesheet" />
+  <!-- ชื่อแอพสำหรับ iOS -->
+<meta name="apple-mobile-web-app-title" content="Zruu" />
+
+<!-- เปิดโหมดเว็บแอพแบบเต็มหน้าจอ (ไม่มีแถบ URL) -->
+<meta name="apple-mobile-web-app-capable" content="yes" />
+
+<!-- สีของแถบสถานะ iOS (status bar) -->
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+<!-- ไอคอนสำหรับเพิ่มหน้าเว็บลง Home Screen บนอุปกรณ์ iOS (ควรใช้ไฟล์ PNG แบบ square) -->
+<link rel="apple-touch-icon" href="/icons/apple.png" />
+
+
+
+<!-- (ถ้ามี) Manifest สำหรับ PWA -->
+<link rel="manifest" href="/manifest.json" />
+
+  <link rel="stylesheet" href="styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div class="container">
+    <h1><i class="fa-solid fa-wallet"></i> วางแผนการเงินรายเดือน</h1>
+
+    <div class="input-group">
+      <label for="monthlyBudget"><i class="fa-solid fa-coins"></i> งบประมาณรายเดือน (บาท)</label>
+      <input type="number" id="monthlyBudget" min="0" placeholder="เช่น 30000" />
+    </div>
+
+    <div class="input-group">
+      <label for="savingGoal"><i class="fa-solid fa-piggy-bank"></i> เป้าหมายการออม (บาท)</label>
+      <input type="number" id="savingGoal" min="0" placeholder="เช่น 5000" />
+    </div>
+
+    <div class="input-group">
+      <label for="daysInMonth"><i class="fa-solid fa-calendar-days"></i> จำนวนวันในเดือน</label>
+      <input type="number" id="daysInMonth" min="1" max="31" value="30" />
+    </div>
+
+    <div class="expenses-section">
+      <h2><i class="fa-solid fa-list-check"></i> หมวดค่าใช้จ่ายต่อเดือน</h2>
+      <div id="expenseList">
+        <!-- เริ่มด้วยค่าอาหาร -->
+        <div class="expense-item">
+          <input type="text" class="expense-name" value="ค่าอาหาร" />
+          <div class="meal-option">
+            <label><input type="radio" name="mealCalc0" value="manual" checked /> ระบุเอง</label>
+            <label><input type="radio" name="mealCalc0" value="auto" /> คำนวณอัตโนมัติ</label>
+          </div>
+          <div class="meal-costs">
+            <input type="number" class="meal-cost" placeholder="เช้า" min="0" />
+            <input type="number" class="meal-cost" placeholder="กลางวัน" min="0" />
+            <input type="number" class="meal-cost" placeholder="เย็น" min="0" />
+          </div>
+        </div>
+      </div>
+      <button id="addExpenseBtn"><i class="fa-solid fa-plus"></i> เพิ่มหมวดใหม่</button>
+    </div>
+
+    <div class="result-section">
+      <h2><i class="fa-solid fa-chart-simple"></i> ผลลัพธ์</h2>
+      <p>งบประมาณทั้งหมด: <span id="totalBudget">0</span> บาท</p>
+      <p>รวมค่าใช้จ่ายย่อยทั้งหมด: <span id="totalExpenses">0</span> บาท</p>
+      <p>งบที่ใช้ได้จริง (หลังหักออม): <span id="netBudget">0</span> บาท</p>
+      <p>เงินใช้ได้ต่อวัน: <span id="dailyBudget">0</span> บาท</p>
+    </div>
+
+    <div class="chart-section">
+      <h2><i class="fa-solid fa-chart-pie"></i> กราฟค่าใช้จ่าย</h2>
+      <canvas id="expenseChart" width="400" height="300"></canvas>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+  <script>
+  document.addEventListener('contextmenu', event => event.preventDefault());
+  document.addEventListener('copy', event => event.preventDefault());
+</script>
+<footer class="footer">
+  <div class="footer-content">
+    <div class="app-name">
+      <img src="assets/zruu-logo.svg" alt="Zruu Logo" class="logo">
+      <span class="brand">Zruu</span> · พัฒนาโดย <span class="author">SNiPER144</span>
+    </div>
+    <div class="donate">
+      <p>สนับสนุนเรา:</p>
+      <div class="donate-methods">
+        <span><img src="assets/promptpay.png" alt="PromptPay"> 088-XXXXXXX</span>
+        <span><img src="assets/truemoney.png" alt="TrueMoney"> 088-XXXXXXX</span>
+        <span>
+          <img src="assets/buymeacoffee.svg" alt="Buy Me a Coffee">
+          <a href="https://www.buymeacoffee.com/snp144" target="_blank">Buy Me a Coffee</a>
+        </span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</div>
+
+</body>
+
+</html>
