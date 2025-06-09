@@ -214,7 +214,9 @@ function updateChart() {
     }
   });
 }
-
+document.addEventListener('DOMContentLoaded', () => {
+  updateSummary(); // เรียกหลัง DOM พร้อม
+});
 
 function createNewExpenseItem(id) {
   const newItem = document.createElement('div');
