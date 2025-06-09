@@ -11,6 +11,8 @@ const totalExpensesDisplay = document.getElementById('totalExpenses');
 const netBudgetDisplay = document.getElementById('netBudget');
 const dailyBudgetDisplay = document.getElementById('dailyBudget');
 const remainingBalanceDisplay = document.getElementById('remainingBalance');
+const foodDailyDisplay = document.getElementById('foodDaily');
+const foodPerMealDisplay = document.getElementById('foodPerMeal');
 
 const chartCanvas = document.getElementById('expenseChart');
 let expenseChart;
@@ -20,12 +22,32 @@ function updateSummary() {
   const savingGoal = parseFloat(savingGoalInput.value) || 0;
   const daysInMonth = parseInt(daysInMonthInput.value) || 30;
 
+  // ถ้ายังไม่ได้กรอกงบประมาณ ไม่ให้คำนวณ
+  if (!totalBudget) {
+    totalBudgetDisplay.textContent = '0';
+    totalExpensesDisplay.textContent = '0';
+    netBudgetDisplay.textContent = '0';
+    dailyBudgetDisplay.textContent = '0.00';
+    remainingBalanceDisplay.textContent = '0';
+    foodDailyDisplay.textContent = '-';
+    foodPerMealDisplay.textContent = '-';
+    if (expenseChart) expenseChart.destroy();
+    return;
+  }
+
+  const netBudget = Math.max(0, totalBudget - savingGoal);
   let totalExpenses = 0;
   expenseData = [];
 
+  let foodItem = null;
+  let otherExpenses = 0;
+
+  let foodPerMeal = '-';
+  let foodDaily = '-';
+
   const expenseItems = document.querySelectorAll('.expense-item');
 
-  expenseItems.forEach((item, idx) => {
+  expenseItems.forEach((item) => {
     const name = item.querySelector('.expense-name')?.value || 'ไม่ระบุ';
     const mealInputs = item.querySelectorAll('.meal-cost');
     const generalCostInput = item.querySelector('.general-cost');
@@ -34,8 +56,10 @@ function updateSummary() {
 
     if (mealInputs.length > 0) {
       if (radio?.value === 'auto') {
-        cost = 60 * 3 * daysInMonth;
+        foodItem = { item, name };
+        return; // ข้ามไปก่อน ยังไม่คิด
       } else {
+        // manual
         let subtotal = 0;
         mealInputs.forEach(input => {
           subtotal += parseFloat(input.value || 0);
@@ -49,20 +73,61 @@ function updateSummary() {
     }
 
     totalExpenses += cost;
+    otherExpenses += cost;
     expenseData.push({ name, cost });
   });
 
-  const netBudget = Math.max(0, totalBudget - savingGoal);
-  const dailyBudget = daysInMonth > 0 ? Math.max(0, (netBudget - totalExpenses) / daysInMonth) : 0;
+  if (foodItem) {
+    if (totalBudget === 0) {
+      alert("โปรดใส่จำนวนงบประมาณรายเดือนก่อนเลือกคำนวณค่าอาหารแบบอัตโนมัติ");
+      const mealInputs = foodItem.item.querySelectorAll('.meal-cost');
+      mealInputs.forEach(input => {
+        input.placeholder = 'ต้องกรอกงบก่อน';
+        input.value = '';
+      });
+    } else {
+      const available = Math.max(0, netBudget - otherExpenses);
+      const totalMeals = 3 * daysInMonth;
 
-  // ยอดเงินคงเหลือ (งบที่ใช้ได้จริง - รวมค่าใช้จ่าย)
+      let foodBudgetPercent;
+      if (netBudget <= 2000) {
+        foodBudgetPercent = 0.85;
+      } else if (netBudget <= 5000) {
+        foodBudgetPercent = 0.65;
+      } else if (netBudget <= 10000) {
+        foodBudgetPercent = 0.55;
+      } else if (netBudget <= 20000) {
+        foodBudgetPercent = 0.45;
+      } else {
+        foodBudgetPercent = 0.35;
+      }
+
+      const foodBudget = available * foodBudgetPercent;
+      foodPerMeal = totalMeals > 0 ? foodBudget / totalMeals : 0;
+      foodDaily = foodPerMeal * 3;
+      const foodCost = foodPerMeal * totalMeals;
+
+      const mealInputs = foodItem.item.querySelectorAll('.meal-cost');
+      mealInputs.forEach(input => {
+        input.placeholder = `${foodPerMeal.toFixed(0)} (auto)`;
+        input.value = '';
+      });
+
+      totalExpenses += foodCost;
+      expenseData.push({ name: foodItem.name, cost: foodCost });
+    }
+  }
+
   const remainingBalance = Math.max(0, netBudget - totalExpenses);
+  const dailyBudget = daysInMonth > 0 ? remainingBalance / daysInMonth : 0;
 
   totalBudgetDisplay.textContent = totalBudget.toLocaleString();
   totalExpensesDisplay.textContent = totalExpenses.toLocaleString();
   netBudgetDisplay.textContent = netBudget.toLocaleString();
   dailyBudgetDisplay.textContent = dailyBudget.toFixed(2);
   remainingBalanceDisplay.textContent = remainingBalance.toLocaleString();
+  foodDailyDisplay.textContent = (typeof foodDaily === 'number') ? foodDaily.toFixed(0) : '-';
+  foodPerMealDisplay.textContent = (typeof foodPerMeal === 'number') ? foodPerMeal.toFixed(0) : '-';
 
   updateChart();
 }
