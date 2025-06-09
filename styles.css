@@ -188,6 +188,8 @@ input:focus, select:focus {
 
 .meal-option label {
   background-color: #eef3fb;
+  color: #001f3f; /* สีเข้มขึ้น */
+  font-weight: 700; /* เพิ่มความทึบของตัวอักษร */
   padding: 8px 14px;
   border-radius: 20px;
   cursor: pointer;
