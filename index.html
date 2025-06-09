@@ -69,6 +69,7 @@
     <div class="result-section">
       <h2><i class="fa-solid fa-chart-simple"></i> ผลลัพธ์</h2>
   <p><i class="fa-solid fa-coins"></i> งบประมาณทั้งหมด : <span id="totalBudget">0</span> บาท</p>
+  <p><i class="fa-solid fa-calendar-days"></i> จำนวนวันในเดือนนี้ : <span id="daysDisplay">30</span> วัน</p>
   <p><i class="fa-solid fa-list"></i> รวมค่าใช้จ่ายย่อยทั้งหมด : <span id="totalExpenses">0</span> บาท</p>
   <p><i class="fa-solid fa-calculator"></i> งบที่ใช้ได้จริง (หลังหักออม) : <span id="netBudget">0</span> บาท</p>
   <p><i class="fa-solid fa-wallet"></i> ยอดเงินคงเหลือ : <span id="remainingBalance">0</span> บาท</p>
@@ -81,9 +82,12 @@
 
     <div class="chart-section">
       <h2><i class="fa-solid fa-chart-pie"></i> กราฟค่าใช้จ่าย</h2>
-      <canvas id="expenseChart" width="400" height="300"></canvas>
+      
     </div>
   </div>
+  <div class="chart-container">
+  <canvas id="expenseChart" width="400" height="400"></canvas>
+</div>
 
   <script src="script.js?v=2"></script>
   <script>

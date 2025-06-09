@@ -13,6 +13,8 @@ const dailyBudgetDisplay = document.getElementById('dailyBudget');
 const remainingBalanceDisplay = document.getElementById('remainingBalance');
 const foodDailyDisplay = document.getElementById('foodDaily');
 const foodPerMealDisplay = document.getElementById('foodPerMeal');
+const daysDisplay = document.getElementById('daysDisplay');
+
 
 const chartCanvas = document.getElementById('expenseChart');
 let expenseChart;
@@ -22,7 +24,6 @@ function updateSummary() {
   const savingGoal = parseFloat(savingGoalInput.value) || 0;
   const daysInMonth = parseInt(daysInMonthInput.value) || 30;
 
-  // ถ้ายังไม่ได้กรอกงบประมาณ ไม่ให้คำนวณ
   if (!totalBudget) {
     totalBudgetDisplay.textContent = '0';
     totalExpensesDisplay.textContent = '0';
@@ -41,7 +42,6 @@ function updateSummary() {
 
   let foodItem = null;
   let otherExpenses = 0;
-
   let foodPerMeal = '-';
   let foodDaily = '-';
 
@@ -57,14 +57,18 @@ function updateSummary() {
     if (mealInputs.length > 0) {
       if (radio?.value === 'auto') {
         foodItem = { item, name };
-        return; // ข้ามไปก่อน ยังไม่คิด
+        return;
       } else {
-        // manual
         let subtotal = 0;
         mealInputs.forEach(input => {
-          subtotal += parseFloat(input.value || 0);
+          const value = parseFloat(input.value);
+          if (!isNaN(value)) {
+            subtotal += value;
+          }
         });
         cost = subtotal * daysInMonth;
+        foodDaily = subtotal;
+        foodPerMeal = subtotal / 3;
       }
     } else if (generalCostInput) {
       const mode = item.querySelector(`input[name="costMode${item.dataset.id}"]:checked`)?.value;
@@ -128,7 +132,7 @@ function updateSummary() {
   remainingBalanceDisplay.textContent = remainingBalance.toLocaleString();
   foodDailyDisplay.textContent = (typeof foodDaily === 'number') ? foodDaily.toFixed(0) : '-';
   foodPerMealDisplay.textContent = (typeof foodPerMeal === 'number') ? foodPerMeal.toFixed(0) : '-';
-
+  daysDisplay.textContent = daysInMonth;
   updateChart();
 }
 
@@ -138,25 +142,79 @@ function updateChart() {
 
   if (expenseChart) expenseChart.destroy();
 
+  // สร้าง Gradient สีเรืองแสงสวยๆ
+  const gradientColors = [
+    'rgba(52, 152, 219, 0.9)',
+    'rgba(46, 204, 113, 0.9)',
+    'rgba(241, 196, 15, 0.9)',
+    'rgba(230, 126, 34, 0.9)',
+    'rgba(155, 89, 182, 0.9)',
+    'rgba(231, 76, 60, 0.9)'
+  ];
+
+  const borderColors = [
+    'rgba(255,255,255,0.7)',
+    'rgba(255,255,255,0.7)',
+    'rgba(255,255,255,0.7)',
+    'rgba(255,255,255,0.7)',
+    'rgba(255,255,255,0.7)',
+    'rgba(255,255,255,0.7)'
+  ];
+
   expenseChart = new Chart(chartCanvas, {
     type: 'pie',
     data: {
       labels,
       datasets: [{
         data,
-        backgroundColor: ['#3498db', '#2ecc71', '#f1c40f', '#e67e22', '#9b59b6', '#e74c3c']
+        backgroundColor: gradientColors,
+        borderColor: borderColors,
+        borderWidth: 2,
+        hoverOffset: 14,
       }]
     },
     options: {
       responsive: true,
       plugins: {
         legend: {
-          position: 'bottom'
+          position: 'bottom',
+          labels: {
+            color: '#e8f4ff',
+            font: {
+              family: 'Prompt',
+              weight: 'bold',
+              size: 14
+            },
+            padding: 15,
+            boxWidth: 20
+          }
+        },
+        tooltip: {
+          backgroundColor: '#001f3f',
+          borderColor: '#3399ff',
+          borderWidth: 1,
+          cornerRadius: 8,
+          titleFont: {
+            family: 'Prompt',
+            weight: 'bold'
+          },
+          bodyFont: {
+            family: 'Prompt',
+            weight: '500'
+          },
+          callbacks: {
+            label: (context) => {
+              const label = context.label || '';
+              const value = context.parsed;
+              return `${label}: ฿${value.toLocaleString()}`;
+            }
+          }
         }
       }
     }
   });
 }
+
 
 function createNewExpenseItem(id) {
   const newItem = document.createElement('div');
@@ -185,6 +243,29 @@ function createNewExpenseItem(id) {
   return newItem;
 }
 
+function addMealExpenseItem(item) {
+  item.querySelectorAll('input').forEach(input => {
+    input.addEventListener('input', updateSummary);
+    input.addEventListener('change', updateSummary);
+  });
+
+  const radioGroup = item.querySelectorAll('input[type="radio"][name^="mealCalc"]');
+  radioGroup.forEach(radio => {
+    radio.addEventListener('change', updateSummary);
+  });
+
+  const mealInputs = item.querySelectorAll('.meal-cost');
+  mealInputs.forEach(input => {
+    input.addEventListener('input', updateSummary);
+    input.addEventListener('change', updateSummary);
+  });
+
+  item.querySelector('.btn-remove-expense')?.addEventListener('click', () => {
+    item.remove();
+    updateSummary();
+  });
+}
+
 monthlyBudgetInput.addEventListener('input', updateSummary);
 savingGoalInput.addEventListener('input', updateSummary);
 daysInMonthInput.addEventListener('input', updateSummary);
@@ -196,6 +277,15 @@ expenseList.addEventListener('change', (e) => {
     if (mealInputs) {
       mealInputs.style.display = (e.target.value === 'auto') ? 'none' : 'flex';
     }
+
+       // ✅ แก้ตรงนี้: reset placeholder ถ้าเลือก manual
+      if (e.target.value !== 'auto') {
+        const inputs = mealInputs.querySelectorAll('.meal-cost');
+        const defaultPlaceholders = ['เช้า', 'กลางวัน', 'เย็น'];
+        inputs.forEach((input, index) => {
+          input.placeholder = defaultPlaceholders[index] || '';
+        });
+      }
     updateSummary();
   }
 });
@@ -205,5 +295,7 @@ addExpenseBtn.addEventListener('click', () => {
   const newItem = createNewExpenseItem(newId);
   expenseList.appendChild(newItem);
 });
+
+document.querySelectorAll('.expense-item').forEach(addMealExpenseItem);
 
 updateSummary();

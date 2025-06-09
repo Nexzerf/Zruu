@@ -77,6 +77,50 @@ h2 {
   border-radius: 12px;
   box-shadow: inset 0 0 12px #3399ff44;
 }
+.chart-section {
+  background: linear-gradient(135deg, rgba(0, 78, 146, 0.4), rgba(0, 31, 63, 0.6));
+  padding: 25px;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0, 119, 255, 0.3), inset 0 0 12px #3399ff66;
+  position: relative;
+  overflow: hidden;
+}
+
+.chart-section::before {
+  content: '';
+  position: absolute;
+  top: -30%;
+  left: -30%;
+  width: 160%;
+  height: 160%;
+  background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%);
+  animation: rotateLight 15s linear infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.chart-section canvas {
+  position: relative;
+  z-index: 1;
+  filter: drop-shadow(0 0 8px #3399ff88);
+  transition: transform 0.3s ease;
+}
+
+.chart-section canvas:hover {
+  transform: scale(1.02);
+}
+.chart-section {
+  backdrop-filter: blur(10px);
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+
+@keyframes rotateLight {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
 .input-group input[type=range] {
   width: 100%;
   margin-top: 5px;
