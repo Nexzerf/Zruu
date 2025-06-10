@@ -152,7 +152,7 @@ input[type=range] {
 }
 
 .calendar-icon {
-  background: #007bff; /* สีน้ำเงินสด */
+  background: transparent; /* สีน้ำเงินสด */
   color: white;
   padding: 4px; /* ลดลงจาก 6px เหลือ 4px */
   border-radius: 50%;
@@ -426,9 +426,12 @@ input[type=range] {
   font-weight: 800;
   text-shadow: 0 0 4px #bfdbfe;
 }
-
+.flatpickr-days {
+  min-height: 220px; /* เพิ่มจาก default เพื่อให้แสดงครบ */
+  overflow: visible !important; /* ป้องกันตัด content */
+}
 /* Responsive - ลดขนาด dropdown บนมือถือ */
-@media (max-width: 480px) {
+@media (max-width: 420px) {
   .flatpickr-calendar {
     width: 280px;
   }
@@ -441,6 +444,10 @@ input[type=range] {
   }
   .flatpickr-month {
     font-size: 0.9rem;
+  }
+  
+ .flatpickr-days {
+    min-height: 240px;
   }
   .flatpickr-prev-month,
   .flatpickr-next-month {
