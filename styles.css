@@ -184,7 +184,8 @@ input[type=range] {
   animation: fadeIn 0.35s ease-in-out;
   overflow: hidden;
   width: 320px;
-  max-width: 95vw;
+  max-width: 100vw; /* ปรับจาก 95vw เป็น 100vw */
+  box-sizing: border-box;
 }
 
 /* fade animation */
@@ -209,34 +210,35 @@ input[type=range] {
   flex: 1;
   text-align: center;
   font-weight: 600;
-  font-size: 0.7rem; /* ลดขนาดลงนิดหน่อย */
+  font-size: 0.7rem;
   color: #ffffff;
   text-transform: uppercase;
   letter-spacing: 1.5px;
   user-select: none;
-  text-shadow: 0 0 4px #ffffff;
+  /* ลบกล่องเรืองแสงออก */
+  text-shadow: none;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-family: 'Prompt', sans-serif; /* บังคับใช้ Prompt */
+  font-family: 'Prompt', sans-serif;
   margin: 0;
   padding: 0;
 }
 
-/* ปุ่มเลื่อนเดือน (เอาวงกลมออก, ขยายลูกศร) */
+/* ปุ่มเลื่อนเดือน */
 .flatpickr-prev-month,
 .flatpickr-next-month {
   color: #e0e7ff;
-  font-size: 2.0rem; /* ขยายใหญ่ขึ้น */
-  padding: 8px 12px; /* ปรับ padding ให้พอดี */
+  font-size: 2rem;
+  padding: 8px 12px;
   cursor: pointer;
   filter: drop-shadow(0 0 3px #3b82f6);
   transition: transform 0.25s ease, color 0.3s ease;
-  border-radius: 0; /* เอาวงกลมออก */
+  border-radius: 0;
   user-select: none;
-  background: transparent; /* เอาพื้นหลังออก */
+  background: transparent;
   margin: 0 10px;
-  font-family: 'Prompt', sans-serif; /* ใช้ฟ้อนต์ Prompt */
+  font-family: 'Prompt', sans-serif;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -245,7 +247,7 @@ input[type=range] {
 .flatpickr-next-month:hover {
   transform: scale(1.3);
   color: #93c5fd;
-  background: rgba(255 255 255 / 0.2);
+  background: rgba(255, 255, 255, 0.2);
   box-shadow: 0 0 10px #93c5fd;
 }
 
@@ -295,7 +297,6 @@ input[type=range] {
   box-shadow: 0 0 15px #3b82f6;
   border-radius: 12px;
   animation: daySelectPop 0.4s ease forwards;
-  font-family: 'Prompt', sans-serif;
 }
 @keyframes daySelectPop {
   0% {
@@ -317,7 +318,6 @@ input[type=range] {
   background: rgba(147, 197, 253, 0.3);
   color: #dbeafe;
   font-weight: 600;
-  font-family: 'Prompt', sans-serif;
 }
 
 /* dropdown เดือน */
@@ -327,7 +327,7 @@ input[type=range] {
   background: linear-gradient(135deg, rgba(59,130,246,0.7), rgba(30,64,175,0.9));
   border: 2px solid #60a5fa;
   padding: 4px 12px;
-  box-shadow: 0 0 15px #60a5faaa;
+  box-shadow: none; /* ลบกล่องเรืองแสงออก */
   width: 180px;
   max-width: 90vw;
   user-select: none;
@@ -351,14 +351,7 @@ input[type=range] {
   text-align: center;
   outline: none;
   cursor: pointer;
-  box-shadow:
-    0 0 10px #60a5fa,
-    inset 0 0 8px #1e40af;
-  transition:
-    box-shadow 0.4s ease,
-    background 0.3s ease,
-    opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1),
-    transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: none;
   letter-spacing: 1px;
   user-select: none;
   font-family: 'Prompt', sans-serif;
@@ -368,19 +361,17 @@ input[type=range] {
   transform: translateY(-20px);
 }
 
-/* เมื่อ dropdown เปิด (hover หรือ focus) */
+/* เมื่อ dropdown เปิด */
 .flatpickr-monthDropdown-months select:hover,
 .flatpickr-monthDropdown-months select:focus {
   opacity: 1;
   transform: translateY(0);
-  box-shadow:
-    0 0 20px #93c5fd,
-    inset 0 0 12px #2563eb;
+  box-shadow: 0 0 20px #93c5fd;
   background: linear-gradient(135deg, rgba(59,130,246,0.9), rgba(30,64,175,1));
   z-index: 10;
 }
 
-/* ลูกศร dropdown แบบกำหนดเอง */
+/* ลูกศร dropdown */
 .flatpickr-monthDropdown-months::after {
   content: "▼";
   position: absolute;
@@ -389,9 +380,8 @@ input[type=range] {
   transform: translateY(-50%);
   color: white;
   pointer-events: none;
-  font-size: 1.5rem; /* ขยายใหญ่ขึ้น */
-  user-select: none;
-  background: none; /* เอาวงกลมรอบออก */
+  font-size: 1.5rem;
+  background: none;
   border-radius: 0;
   padding: 0;
   line-height: 1;
@@ -399,7 +389,7 @@ input[type=range] {
   font-weight: 700;
 }
 
-/* ตัวเลือกเดือนใน dropdown (option) */
+/* ตัวเลือกเดือน */
 .flatpickr-monthDropdown-months select option {
   background: linear-gradient(135deg, #2563eb, #1e40af);
   color: #dbeafe;
@@ -407,93 +397,44 @@ input[type=range] {
   font-weight: 600;
   letter-spacing: 0.8px;
   user-select: none;
-  transition: background-color 0.3s ease, color 0.3s ease;
   font-family: 'Prompt', sans-serif;
 }
-
-/* hover ตัวเลือกเดือน */
 .flatpickr-monthDropdown-months select option:hover,
 .flatpickr-monthDropdown-months select option:focus {
   background: #93c5fd;
   color: #1e3a8a;
   font-weight: 700;
 }
-
-/* ตัวเลือกเดือนที่ถูกเลือก */
 .flatpickr-monthDropdown-months select option:checked {
   background: #3b82f6;
   color: #e0e7ff;
   font-weight: 800;
-  text-shadow: 0 0 4px #bfdbfe;
 }
+
+/* แก้ตารางวันให้สูงขึ้น */
 .flatpickr-days {
-  min-height: 220px; /* เพิ่มจาก default เพื่อให้แสดงครบ */
-  overflow: visible !important; /* ป้องกันตัด content */
+  min-height: 220px;
+  overflow: visible !important;
 }
-/* Responsive - ลดขนาด dropdown บนมือถือ */
-@media (max-width: 420px) {
+
+/* Responsive สำหรับมือถือ */
+@media (max-width: 480px) {
   .flatpickr-calendar {
-    width: 280px;
+    width: 100vw;
+    max-width: 100vw;
+    border-radius: 0;
+    padding: 10px 0 16px;
   }
+
   .flatpickr-monthDropdown-months {
-    width: 140px;
+    width: 90%;
   }
+
   .flatpickr-monthDropdown-months select {
-    font-size: 0.9rem;
-    padding: 5px 10px;
-  }
-  .flatpickr-month {
-    font-size: 0.9rem;
-  }
-  
- .flatpickr-days {
-    min-height: 240px;
-  }
-  .flatpickr-prev-month,
-  .flatpickr-next-month {
-    font-size: 1.4rem; /* ปรับให้เหมาะกับมือถือ */
-    padding: 6px 10px;
-    margin: 0 6px;
+    font-size: 1rem;
   }
 }
 
-/* animation effect เลือกวัน */
-@keyframes slideFadeIn {
-  0% {
-    opacity: 0;
-    transform: translateY(-6px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* dropdown เดือน: ขยายความสูงให้แสดงครบ */
-.flatpickr-monthDropdown-months select {
-  max-height: none !important;
-  overflow-y: auto !important;
-}
-
-/* option dropdown: บังคับให้มีขนาดพออ่าน */
-.flatpickr-monthDropdown-months select option {
-  padding: 10px 16px;
-  font-size: 1rem;
-}
-
-.flatpickr-monthDropdown-months select {
-  opacity: 0;
-  transform: translateY(-12px);
-  transition:
-    opacity 0.4s ease,
-    transform 0.4s ease;
-}
-
-.flatpickr-monthDropdown-months select:focus,
-.flatpickr-monthDropdown-months select:hover {
-  opacity: 1;
-  transform: translateY(0);
-}
 
 input[type=range]::-webkit-slider-thumb {
   -webkit-appearance: none;
