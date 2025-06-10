@@ -214,9 +214,35 @@ function updateChart() {
     }
   });
 }
+// หลัง updateSummary(); ใน DOMContentLoaded
 document.addEventListener('DOMContentLoaded', () => {
-  updateSummary(); // เรียกหลัง DOM พร้อม
+  updateSummary();
+
+  flatpickr("#calendarTrigger", {
+  mode: "range",
+  dateFormat: "Y-m-d",
+  locale: "th",
+  maxDate: new Date().fp_incr(31), // ป้องกันเลือกเกิน 31 วัน
+  onClose: function(selectedDates) {
+    if (selectedDates.length === 2) {
+      const diff = Math.ceil((selectedDates[1] - selectedDates[0]) / (1000 * 60 * 60 * 24)) + 1;
+      const days = Math.min(diff, 31);
+      document.getElementById("daysInMonth").value = days;
+      updateSummary();
+    }
+  },
+  onReady: function(selectedDates, dateStr, instance) {
+    // ลบ dropdown ปีออก
+    const yearInput = instance.calendarContainer.querySelector(".numInputWrapper");
+    if (yearInput) {
+      yearInput.style.display = "none";
+    }
+  },
+  positionElement: document.querySelector("#calendarTrigger")
 });
+
+});
+
 
 function createNewExpenseItem(id) {
   const newItem = document.createElement('div');
@@ -301,3 +327,6 @@ addExpenseBtn.addEventListener('click', () => {
 document.querySelectorAll('.expense-item').forEach(addMealExpenseItem);
 
 updateSummary();
+
+
+
