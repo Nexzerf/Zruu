@@ -222,7 +222,7 @@ flatpickr("#calendarTrigger", {
   dateFormat: "Y-m-d",
   locale: "th",
   showMonths: 1,
-  disableMobile: true,
+  disableMobile: false,
   onChange: function(selectedDates, dateStr, instance) {
     if (selectedDates.length === 2) {
       const diff = Math.ceil((selectedDates[1] - selectedDates[0]) / (1000 * 60 * 60 * 24)) + 1;
