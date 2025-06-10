@@ -7,6 +7,12 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/icons/32.png" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <link href="https://fonts.googleapis.com/css2?family=Prompt&display=swap" rel="stylesheet" />
+<!-- โหลด CSS Flatpickr -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;600&display=swap" rel="stylesheet" />
+
+
+
   <!-- ชื่อแอพสำหรับ iOS -->
 <meta name="apple-mobile-web-app-title" content="Zruu" />
 
@@ -42,10 +48,19 @@
       <input type="number" id="savingGoal" min="0" placeholder="เช่น 5000" />
     </div>
 
-    <div class="input-group">
-      <label for="daysInMonth"><i class="fa-solid fa-calendar-days"></i> จำนวนวันในเดือน</label>
-      <input type="number" id="daysInMonth" min="1" max="31" value="30" />
-    </div>
+<!-- ใส่ในส่วนของ HTML -->
+<div class="input-group">
+  <label for="daysInMonth">
+    <i class="fa-solid fa-calendar-days"></i> จำนวนวันในเดือน
+  </label>
+  <div class="input-wrapper">
+    <input type="number" id="daysInMonth" min="1" max="31" value="30" readonly />
+    <span class="calendar-icon" id="calendarTrigger">
+      <i class="fa-regular fa-calendar"></i>
+    </span>
+  </div>
+</div>
+
 
     <div class="expenses-section">
       <h2><i class="fa-solid fa-list-check"></i> หมวดค่าใช้จ่ายต่อเดือน</h2>
@@ -120,6 +135,7 @@
 </div>
 
 </body>
+
 <script>
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
@@ -129,6 +145,9 @@
     });
   }
 </script>
+<!-- JS Flatpickr -->
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr@4.6.13/dist/l10n/th.js"></script>
 
 
 </html>
