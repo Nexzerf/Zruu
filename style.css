@@ -359,7 +359,7 @@ input[type="file"] {
 /* ===== RESPONSIVE ===== */
 @media (max-width: 768px) {
   h1 {
-    font-size: 28px;
+    font-size: 24px;
   }
   .donate-button {
     font-size: 16px;
