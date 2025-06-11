@@ -1104,14 +1104,14 @@ footer.footer {
 }
 
 @media (max-width: 480px) {
-  .flatpickr-day {
-    width: calc(14.28571% - 1px) !important;
-    max-width: calc(14.28571% - 1px) !important;
-    min-width: calc(14.28571% - 1px) !important;
-    height: 30px; /* ลดความสูงเพิ่มเติม */
-    line-height: 30px;
-    font-size: 11px;
-    margin: 0.5px;
+ .flatpickr-day {
+    width: calc(14.28571% - 0.5px) !important;
+    max-width: calc(14.28571% - 0.5px) !important;
+    min-width: calc(14.28571% - 0.5px) !important;
+    height: 26px;         /* เดิม 30px → ลดลง */
+    line-height: 26px;    /* เดิม 30px → ลดลง */
+    font-size: 10px;    /* เดิม 11px → ลดลงเล็กน้อย */
+    margin: 0.25px;       /* เดิม 0.5px → ลดลงให้แน่นขึ้น */
   }
   
   .flatpickr-days {
