@@ -734,8 +734,7 @@ footer.footer {
   text-decoration: underline;
 }
 
-/* Flatpickr Calendar Styling */
-/* Flatpickr Calendar Styling - Mobile Enhanced */
+/* Flatpickr Calendar Styling - Fixed Sunday Layout */
 .flatpickr-calendar {
   background: linear-gradient(135deg, var(--white) 0%, var(--light-gray) 100%);
   border-radius: var(--border-radius);
@@ -743,27 +742,28 @@ footer.footer {
   border: 2px solid rgba(59, 130, 246, 0.2);
   font-family: 'Prompt', sans-serif;
   color: var(--primary-blue);
-  padding: 20px;
+  padding: 16px;
   animation: calendarSlideIn 0.4s ease-out;
   backdrop-filter: blur(20px);
   
   /* Mobile responsive fixes */
   max-width: 100vw;
   width: auto;
-  min-width: 320px; /* เพิ่มขนาดขั้นต่ำ */
-  overflow: hidden; /* ป้องกันการล้น */
+  min-width: 300px;
+  overflow: visible; /* เปลี่ยนจาก hidden เป็น visible */
+  box-sizing: border-box;
 }
 
 /* Mobile-specific adjustments */
 @media (max-width: 768px) {
   .flatpickr-calendar {
-    padding: 12px;
-    margin: 10px;
-    max-width: calc(100vw - 20px);
+    padding: 10px;
+    margin: 8px;
+    max-width: calc(100vw - 16px);
     font-size: 10px;
+    min-width: 280px;
   }
   
-  /* Make calendar full width on small screens */
   .flatpickr-calendar.inline {
     width: 100%;
     max-width: none;
@@ -773,24 +773,11 @@ footer.footer {
 /* Portrait mobile optimizations */
 @media (max-width: 480px) and (orientation: portrait) {
   .flatpickr-calendar {
-    padding: 10px;
-    margin: 5px;
-    max-width: calc(100vw - 10px);
+    padding: 8px;
+    margin: 4px;
+    max-width: calc(100vw - 8px);
     font-size: 13px;
-  }
-  
-  .flatpickr-day {
-    height: 32px;
-    width: 32px;
-    line-height: 32px;
-    font-size: 11px;
-  }
-  
-  .flatpickr-weekday {
-    font-size: 10px;
-    height: 28px;
-    line-height: 28px;
-    padding: 4px 0;
+    min-width: 270px;
   }
 }
 
@@ -801,13 +788,13 @@ footer.footer {
 
 .flatpickr-months {
   background: transparent;
-  margin-bottom: 15px;
+  margin-bottom: 12px;
   position: relative;
   overflow: visible;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 26px;
+  padding: 0 20px;
 }
 
 .flatpickr-month {
@@ -822,8 +809,12 @@ footer.footer {
 
 @media (max-width: 480px) {
   .flatpickr-months {
-    padding: 0 16px;
-    margin-bottom: 12px;
+    padding: 0 12px;
+    margin-bottom: 10px;
+  }
+  
+  .flatpickr-month {
+    font-size: 0.9rem;
   }
 }
 
@@ -892,7 +883,6 @@ footer.footer {
   }
 }
 
-/* Active/Selected month effect */
 .flatpickr-monthDropdown-month:active,
 .flatpickr-monthDropdown-month.selected {
   background: linear-gradient(135deg, rgba(59, 130, 246, 0.2) 0%, rgba(37, 99, 235, 0.2) 100%);
@@ -910,7 +900,6 @@ footer.footer {
   100% { transform: scale(1); }
 }
 
-/* Style the current month selector */
 .flatpickr-current-month {
   position: relative;
   display: flex;
@@ -937,25 +926,11 @@ footer.footer {
   z-index: 999;
 }
 
-/* Add dropdown arrow indicator */
 .flatpickr-current-month::after {
   display: none;
 }
 
-.flatpickr-current-month:hover::after {
-  display: none;
-}
-
 @media (max-width: 480px) {
-  .flatpickr-month {
-    font-size: 0.9rem;
-  }
-  
-  .flatpickr-months {
-    padding: 0 20px;
-    margin-bottom: 12px;
-  }
-  
   .flatpickr-current-month {
     padding: 4px 8px;
     margin: 0 8px;
@@ -975,30 +950,30 @@ footer.footer {
 .flatpickr-prev-month,
 .flatpickr-next-month {
   color: var(--secondary-blue);
-  font-size: 1.3rem;
-  padding: 8px;
-  border-radius: 12px;
+  font-size: 1.2rem;
+  padding: 6px;
+  border-radius: 10px;
   transition: var(--transition);
   background: linear-gradient(135deg, rgba(255, 255, 255, 0.8) 0%, rgba(248, 250, 252, 0.8) 100%);
-  width: 36px;
-  height: 36px;
+  width: 32px;
+  height: 32px;
   display: flex;
   align-items: center;
   justify-content: center;
   border: 1px solid rgba(59, 130, 246, 0.1);
   position: relative;
   z-index: 10;
-  margin: 0 4px;
+  margin: 0 2px;
 }
 
 @media (max-width: 480px) {
   .flatpickr-prev-month,
   .flatpickr-next-month {
-    width: 32px;
-    height: 32px;
-    font-size: 1.1rem;
-    padding: 6px;
-    margin: 0 2px;
+    width: 28px;
+    height: 28px;
+    font-size: 1rem;
+    padding: 4px;
+    margin: 0 1px;
   }
 }
 
@@ -1020,8 +995,8 @@ footer.footer {
 .flatpickr-weekdays {
   background: rgba(59, 130, 246, 0.05);
   border-radius: var(--border-radius-small);
-  margin-bottom: 8px;
-  padding: 8px 0;
+  margin-bottom: 6px;
+  padding: 6px 0;
   display: flex;
   width: 100%;
   align-items: center;
@@ -1030,7 +1005,7 @@ footer.footer {
 .flatpickr-weekday {
   color: var(--secondary-blue);
   font-weight: 600;
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   text-transform: uppercase;
   letter-spacing: 0.5px;
   width: 14.28571%;
@@ -1038,7 +1013,7 @@ footer.footer {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 20px;
+  height: 18px;
   line-height: 1;
   padding: 0;
 }
@@ -1046,102 +1021,102 @@ footer.footer {
 @media (max-width: 480px) {
   .flatpickr-weekday {
     font-size: 0.75rem;
-    height: 18px;
+    height: 16px;
   }
   
   .flatpickr-weekdays {
-    padding: 6px 0;
+    padding: 4px 0;
+    margin-bottom: 4px;
   }
 }
 
+/* Days Container - คงรูปแบบเดิม แค่ปรับ spacing */
 .flatpickr-days {
   width: 100%;
   min-width: 0;
   display: flex;
   flex-wrap: wrap;
-  padding: 0;
+  padding: 0 2px; /* เพิ่ม padding ข้างเล็กน้อย */
   gap: 0;
-  box-sizing: border-box; /* เพิ่ม box-sizing */
-  overflow: visible; /* ให้แน่ใจว่าเนื้อหาไม่หาย */
+  box-sizing: border-box;
+  overflow: visible;
 }
 
+/* Day Cell - ลดกรอบและปรับ spacing */
 .flatpickr-day {
   color: var(--primary-blue);
-  border-radius: var(--border-radius-small);
+  border-radius: 6px; /* ลดขนาด border-radius จาก 8px */
   transition: var(--transition);
   font-weight: 500;
   position: relative;
   background: rgba(255, 255, 255, 0.8);
   
-  /* ปรับ Fixed grid layout ให้แน่นอนและเต็มพื้นที่ */
-  width: calc(100% / 7) !important;
-  max-width: calc(100% / 7) !important;
-  min-width: calc(100% / 7) !important;
+  /* ปรับขนาดให้พอดี แต่ไม่ยืดเต็มจอ */
+  width: calc(100% / 7 - 2px); /* ลด margin เล็กน้อย */
+  max-width: calc(100% / 7 - 2px);
+  min-width: calc(100% / 7 - 2px);
   height: 40px;
   line-height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
   box-sizing: border-box;
-  margin: 0;
-  border: 0.5px solid rgba(59, 130, 246, 0.1);
+  margin: 1px; /* ลด margin จาก 2px เป็น 1px */
+  border: 0.5px solid rgba(59, 130, 246, 0.08); /* ลดขนาด border */
   font-size: 14px;
-  float: left; /* เพิ่ม float เพื่อให้แน่ใจว่าเรียงกันถูกต้อง */
+  float: left;
   text-align: center;
-  overflow: visible; /* ให้แน่ใจว่าตัวเลขไม่หาย */
+  overflow: visible;
 }
 
-/* Responsive day sizing - ปรับให้เต็มพื้นที่และแสดงครบ */
+/* Responsive day sizing - ปรับ spacing สำหรับหน้าจอเล็ก */
 @media (max-width: 600px) {
   .flatpickr-day {
-    width: calc(100% / 7) !important;
-    max-width: calc(100% / 7) !important;
-    min-width: calc(100% / 7) !important;
+    width: calc(100% / 7 - 1.5px);
+    max-width: calc(100% / 7 - 1.5px);
+    min-width: calc(100% / 7 - 1.5px);
     height: 38px;
     line-height: 38px;
     font-size: 13px;
-    margin: 0;
+    margin: 0.75px; /* ลด margin */
   }
   
-  .flatpickr-calendar {
-    min-width: 300px; /* เพิ่มความกว้างขั้นต่ำ */
+  .flatpickr-days {
+    padding: 0 1px;
   }
 }
 
 @media (max-width: 414px) {
   .flatpickr-day {
-    width: calc(100% / 7) !important;
-    max-width: calc(100% / 7) !important;
-    min-width: calc(100% / 7) !important;
+    width: calc(100% / 7 - 1px);
+    max-width: calc(100% / 7 - 1px);
+    min-width: calc(100% / 7 - 1px);
     height: 35px;
     line-height: 35px;
     font-size: 12px;
-    margin: 0;
-    padding: 0;
+    margin: 0.5px; /* ลด margin อีก */
+    border-radius: 4px; /* ลด border-radius */
   }
   
-  .flatpickr-calendar {
-    min-width: 280px;
-    padding: 15px; /* เพิ่म padding เพื่อให้มีพื้นที่เพียงพอ */
+  .flatpickr-days {
+    padding: 0;
   }
 }
 
-/* Fix for very small screens */
 @media (max-width: 320px) {
   .flatpickr-day {
+    width: calc(100% / 7 - 0.5px);
+    max-width: calc(100% / 7 - 0.5px);
+    min-width: calc(100% / 7 - 0.5px);
     height: 32px;
     line-height: 32px;
     font-size: 11px;
-    margin: 0;
-    width: calc(100% / 7) !important;
-    max-width: calc(100% / 7) !important;
-    min-width: calc(100% / 7) !important;
+    margin: 0.25px; /* margin เล็กมาก */
+    border-radius: 3px;
   }
   
   .flatpickr-calendar {
-    padding: 10px;
-    font-size: 12px;
-    min-width: 280px; /* เพิ่มความกว้างขั้นต่ำ */
+    min-width: 280px; /* เพิ่มความกว้างขั้นต่ำเล็กน้อย */
   }
 }
 
@@ -1152,6 +1127,7 @@ footer.footer {
   font-weight: 700;
   box-shadow: 0 2px 8px rgba(59, 130, 246, 0.2);
   z-index: 1;
+  border-color: rgba(59, 130, 246, 0.3);
 }
 
 .flatpickr-day.selected {
@@ -1161,6 +1137,7 @@ footer.footer {
   box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
   animation: daySelected 0.4s ease-out;
   z-index: 2;
+  border-color: rgba(59, 130, 246, 0.5);
 }
 
 .flatpickr-day.today {
@@ -1168,6 +1145,7 @@ footer.footer {
   color: var(--primary-blue);
   font-weight: 700;
   border: 2px solid rgba(59, 130, 246, 0.3);
+  box-shadow: 0 0 0 1px rgba(59, 130, 246, 0.1);
 }
 
 .flatpickr-day.today:hover {
@@ -1197,6 +1175,7 @@ footer.footer {
 /* Responsive container adjustments */
 .flatpickr-wrapper {
   width: 100%;
+  overflow: visible;
 }
 
 /* Time picker adjustments for mobile */
@@ -1204,8 +1183,8 @@ footer.footer {
   .flatpickr-time {
     max-height: none;
     border-top: 1px solid rgba(59, 130, 246, 0.2);
-    margin-top: 10px;
-    padding-top: 10px;
+    margin-top: 8px;
+    padding-top: 8px;
   }
   
   .flatpickr-time input {
