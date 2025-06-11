@@ -1126,6 +1126,8 @@ footer.footer {
     left: 0 !important;
     right: 0 !important;
     margin: 0 auto;
+    padding: 0;
+    box-sizing: border-box;
   }
 
   .flatpickr-days {
@@ -1137,16 +1139,19 @@ footer.footer {
   }
 
   .flatpickr-day {
-    flex: 0 0 calc(100% / 7);
-    max-width: calc(100% / 7);
-    height: 34px;
-    line-height: 34px;
-    font-size: 11px;
+    width: calc(100% / 7 - 2.2px);
+    max-width: calc(100% / 7 - 2.2px);
+    min-width: calc(100% / 7 - 2.2px);
+    height: 30px;
+    line-height: 30px;
+    font-size: 10px;
+    margin: 0;
     padding: 0;
-    margin: 0 !important;
+    border-radius: 1px;
     box-sizing: border-box;
   }
 }
+
 
 @media (max-width: 320px) {
   .flatpickr-day {
