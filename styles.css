@@ -186,9 +186,11 @@ input[type=range] {
   width: 320px;
   max-width: 100vw;
   box-sizing: border-box;
+  max-height: 90vh;
+  overflow-y: auto;
+  z-index: 9999;
 }
 
-/* fade animation */
 @keyframes fadeIn {
   0% { opacity: 0; transform: translateY(-12px); }
   100% { opacity: 1; transform: translateY(0); }
@@ -204,7 +206,7 @@ input[type=range] {
   position: relative;
 }
 
-/* ชื่อเดือนตรงกลาง */
+/* ชื่อเดือน */
 .flatpickr-month {
   flex: 1;
   text-align: center;
@@ -225,28 +227,103 @@ input[type=range] {
 .flatpickr-prev-month,
 .flatpickr-next-month {
   color: #e0e7ff;
-  font-size: 2rem;
-  padding: 8px 12px;
+  font-size: 1.5rem;
+  padding: 4px 6px;
+  margin: 0 6px;
+  border-radius: 8px;
   cursor: pointer;
-  filter: drop-shadow(0 0 3px #3b82f6);
-  transition: transform 0.25s ease, color 0.3s ease;
   background: transparent;
-  margin: 0 10px;
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: transform 0.2s ease, color 0.3s ease;
+  filter: drop-shadow(0 0 2px #3b82f6);
 }
+
 .flatpickr-prev-month:hover,
 .flatpickr-next-month:hover {
-  transform: scale(1.3);
+  transform: scale(1.1);
   color: #93c5fd;
-  background: rgba(255, 255, 255, 0.2);
-  box-shadow: 0 0 10px #93c5fd;
+  background: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 0 5px rgba(147, 197, 253, 0.4);
 }
 
 /* ซ่อนปี */
 .flatpickr-current-month .numInputWrapper {
   display: none !important;
+}
+
+/* dropdown เดือน */
+.flatpickr-monthDropdown-months {
+  position: relative;
+  border-radius: 14px;
+  background: linear-gradient(135deg, rgba(59,130,246,0.7), rgba(30,64,175,0.9));
+  border: 2px solid #60a5fa;
+  padding: 4px 12px;
+  width: 180px;
+  max-width: 90vw;
+  user-select: none;
+  cursor: pointer;
+  overflow: hidden;
+  perspective: 600px;
+}
+
+.flatpickr-monthDropdown-months select {
+  background: linear-gradient(135deg, rgba(59,130,246,0.7), rgba(30,64,175,0.9));
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 700;
+  border: none;
+  width: 100%;
+  padding: 8px 14px;
+  border-radius: 14px;
+  appearance: none;
+  text-align: center;
+  outline: none;
+  cursor: pointer;
+  letter-spacing: 1px;
+  opacity: 0;
+  transform: translateY(-20px);
+}
+
+.flatpickr-monthDropdown-months select:hover,
+.flatpickr-monthDropdown-months select:focus {
+  opacity: 1;
+  transform: translateY(0);
+  box-shadow: 0 0 20px #93c5fd;
+  background: linear-gradient(135deg, rgba(59,130,246,0.9), rgba(30,64,175,1));
+  z-index: 10;
+}
+
+.flatpickr-monthDropdown-months::after {
+  content: "▼";
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: white;
+  pointer-events: none;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.flatpickr-monthDropdown-months select option {
+  background: linear-gradient(135deg, #2563eb, #1e40af);
+  color: #dbeafe;
+  padding: 10px 20px;
+  font-weight: 600;
+  letter-spacing: 0.8px;
+}
+.flatpickr-monthDropdown-months select option:hover,
+.flatpickr-monthDropdown-months select option:focus {
+  background: #93c5fd;
+  color: #1e3a8a;
+  font-weight: 700;
+}
+.flatpickr-monthDropdown-months select option:checked {
+  background: #3b82f6;
+  color: #e0e7ff;
+  font-weight: 800;
 }
 
 /* ตารางวัน */
@@ -259,6 +336,15 @@ input[type=range] {
   font-weight: 600;
   font-size: 0.9rem;
   user-select: none;
+}
+
+/* ตารางวันอยู่ตรงกลาง */
+.flatpickr-days {
+  display: flex;
+  justify-content: center;
+  padding: 0 12px;
+  min-height: 220px;
+  overflow: visible !important;
 }
 
 /* วันในเดือน */
@@ -305,105 +391,19 @@ input[type=range] {
 
 /* วันที่อยู่ในช่วง */
 .flatpickr-day.inRange {
-  background: rgba(147, 197, 253, 0.3);
-  color: #dbeafe;
+  background: linear-gradient(135deg, rgba(147, 197, 253, 0.25), rgba(147, 197, 253, 0.15));
+  color: #e0f2fe;
   font-weight: 600;
-}
-
-/* dropdown เดือน */
-.flatpickr-monthDropdown-months {
+  border-radius: 10px;
+  box-shadow: inset 0 0 6px rgba(147, 197, 253, 0.4);
   position: relative;
-  border-radius: 14px;
-  background: linear-gradient(135deg, rgba(59,130,246,0.7), rgba(30,64,175,0.9));
-  border: 2px solid #60a5fa;
-  padding: 4px 12px;
-  width: 180px;
-  max-width: 90vw;
-  user-select: none;
-  cursor: pointer;
-  overflow: hidden;
-  perspective: 600px;
-}
-
-/* select dropdown */
-.flatpickr-monthDropdown-months select {
-  background: linear-gradient(135deg, rgba(59,130,246,0.7), rgba(30,64,175,0.9));
-  color: white;
-  font-size: 1.1rem;
-  font-weight: 700;
-  border: none;
-  width: 100%;
-  padding: 8px 14px;
-  border-radius: 14px;
-  appearance: none;
-  text-align: center;
-  outline: none;
-  cursor: pointer;
-  letter-spacing: 1px;
-
-  opacity: 0;
-  transform: translateY(-20px);
-}
-
-.flatpickr-monthDropdown-months select:hover,
-.flatpickr-monthDropdown-months select:focus {
-  opacity: 1;
-  transform: translateY(0);
-  box-shadow: 0 0 20px #93c5fd;
-  background: linear-gradient(135deg, rgba(59,130,246,0.9), rgba(30,64,175,1));
-  z-index: 10;
-}
-
-/* ลูกศร dropdown */
-.flatpickr-monthDropdown-months::after {
-  content: "▼";
-  position: absolute;
-  right: 16px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: white;
-  pointer-events: none;
-  font-size: 1.5rem;
-  font-weight: 700;
-}
-
-/* ตัวเลือกเดือน */
-.flatpickr-monthDropdown-months select option {
-  background: linear-gradient(135deg, #2563eb, #1e40af);
-  color: #dbeafe;
-  padding: 10px 20px;
-  font-weight: 600;
-  letter-spacing: 0.8px;
-}
-.flatpickr-monthDropdown-months select option:hover,
-.flatpickr-monthDropdown-months select option:focus {
-  background: #93c5fd;
-  color: #1e3a8a;
-  font-weight: 700;
-}
-.flatpickr-monthDropdown-months select option:checked {
-  background: #3b82f6;
-  color: #e0e7ff;
-  font-weight: 800;
-}
-
-/* ตารางวันให้สูงขึ้น */
-.flatpickr-days {
-  min-height: 220px;
-  overflow: visible !important;
-}
-
-.flatpickr-calendar {
-  max-height: 90vh;
-  overflow-y: auto;
-  z-index: 9999;
 }
 
 /* Responsive สำหรับมือถือ */
 @media (max-width: 480px) {
   .flatpickr-calendar {
-    width: 90vw;              /* ไม่เต็มจอ */
-    max-width: 300px;         /* จำกัดความกว้าง */
+    width: 90vw;
+    max-width: 300px;
     border-radius: 16px !important;
     left: 50% !important;
     top: auto !important;
