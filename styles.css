@@ -787,8 +787,11 @@ footer.footer {
   
   .flatpickr-weekday {
     font-size: 11px;
-    height: 25px;
-    line-height: 25px;
+    height: 30px;
+    line-height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 }
 
@@ -802,6 +805,10 @@ footer.footer {
   margin-bottom: 20px;
   position: relative;
   overflow: visible;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
 }
 
 .flatpickr-month {
@@ -810,6 +817,21 @@ footer.footer {
   font-size: 1.1rem;
   text-shadow: 0 2px 4px rgba(59, 130, 246, 0.1);
   position: relative;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Mobile adjustments for month header */
+@media (max-width: 480px) {
+  .flatpickr-months {
+    margin-bottom: 15px;
+  }
+  
+  .flatpickr-month {
+    font-size: 1.05rem;
+  }
 }
 
 /* Style the month dropdown */
@@ -907,6 +929,18 @@ footer.footer {
   transition: all 0.3s ease;
   cursor: pointer;
   border: 1px solid rgba(59, 130, 246, 0.1);
+  flex: 1;
+  max-width: 60%;
+  margin: 0 15px;
+}
+
+/* Mobile adjustments for current month */
+@media (max-width: 480px) {
+  .flatpickr-current-month {
+    padding: 6px 12px;
+    margin: 0 10px;
+    max-width: 65%;
+  }
 }
 
 .flatpickr-current-month:hover {
@@ -931,14 +965,6 @@ footer.footer {
 }
 
 @media (max-width: 480px) {
-  .flatpickr-month {
-    font-size: 1rem;
-  }
-  
-  .flatpickr-current-month {
-    padding: 6px 12px;
-  }
-  
   .flatpickr-monthDropdown-months {
     min-width: 140px;
     padding: 6px 0;
@@ -966,7 +992,8 @@ footer.footer {
   border: 1px solid rgba(59, 130, 246, 0.1);
   position: relative;
   z-index: 10;
-  margin: 0 8px;
+  margin: 0;
+  flex-shrink: 0;
 }
 
 @media (max-width: 480px) {
@@ -976,7 +1003,6 @@ footer.footer {
     height: 38px;
     font-size: 1.2rem;
     padding: 10px;
-    margin: 0 4px;
   }
 }
 
@@ -999,7 +1025,7 @@ footer.footer {
   background: rgba(59, 130, 246, 0.05);
   border-radius: var(--border-radius-small);
   margin-bottom: 10px;
-  padding: 5px 0;
+  padding: 8px 0;
   display: flex;
   width: 100%;
 }
@@ -1017,14 +1043,17 @@ footer.footer {
   justify-content: center;
   height: 40px;
   line-height: 1;
-  padding: 8px 0;
+  padding: 0;
 }
 
 @media (max-width: 480px) {
+  .flatpickr-weekdays {
+    padding: 6px 0;
+  }
+  
   .flatpickr-weekday {
     font-size: 0.75rem;
-    height: 35px;
-    padding: 6px 0;
+    height: 32px;
   }
 }
 
