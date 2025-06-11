@@ -806,23 +806,22 @@ footer.footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 26px; /* เพิ่มระยะห่างจากลูกศรทั้งสองฝั่ง */
+  padding: 0 26px;
 }
 
 .flatpickr-month {
   color: var(--primary-blue);
   font-weight: 700;
-  font-size: 1rem; /* ลดขนาดลงเล็กน้อย */
+  font-size: 1rem;
   text-shadow: 0 2px 4px rgba(59, 130, 246, 0.1);
   position: relative;
   flex: 1;
   text-align: center;
 }
 
-/* ปรับขนาดชื่อเดือนให้เล็กลงในมือถือ */
 @media (max-width: 480px) {
   .flatpickr-months {
-    padding: 0 16px; /* เพิ่มระยะห่างมากขึ้นในมือถือ */
+    padding: 0 16px;
     margin-bottom: 12px;
   }
 }
@@ -916,13 +915,13 @@ footer.footer {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 6px 12px; /* ลด padding */
+  padding: 6px 12px;
   background: linear-gradient(135deg, rgba(59, 130, 246, 0.05) 0%, rgba(37, 99, 235, 0.05) 100%);
   border-radius: 8px;
   transition: all 0.3s ease;
   cursor: pointer;
   border: 1px solid rgba(59, 130, 246, 0.1);
-  margin: 0 12px; /* เพิ่มระยะห่างจากลูกศรทั้งสองฝั่ง */
+  margin: 0 12px;
 }
 
 .flatpickr-current-month:hover {
@@ -939,26 +938,26 @@ footer.footer {
 
 /* Add dropdown arrow indicator */
 .flatpickr-current-month::after {
-  display: none; /* Remove the dropdown arrow */
+  display: none;
 }
 
 .flatpickr-current-month:hover::after {
-  display: none; /* Remove the dropdown arrow */
+  display: none;
 }
 
 @media (max-width: 480px) {
   .flatpickr-month {
-    font-size: 0.9rem; /* ลดขนาดเพิ่มเติม */
+    font-size: 0.9rem;
   }
   
   .flatpickr-months {
-    padding: 0 20px; /* เพิ่มระยะห่างมากขึ้นในมือถือ */
+    padding: 0 20px;
     margin-bottom: 12px;
   }
   
   .flatpickr-current-month {
-    padding: 4px 8px; /* ลด padding เพิ่มเติม */
-    margin: 0 8px; /* เพิ่มระยะห่างในมือถือ */
+    padding: 4px 8px;
+    margin: 0 8px;
   }
   
   .flatpickr-monthDropdown-months {
@@ -975,12 +974,12 @@ footer.footer {
 .flatpickr-prev-month,
 .flatpickr-next-month {
   color: var(--secondary-blue);
-  font-size: 1.3rem; /* ลดขนาดลง */
-  padding: 8px; /* ลด padding */
+  font-size: 1.3rem;
+  padding: 8px;
   border-radius: 12px;
   transition: var(--transition);
   background: linear-gradient(135deg, rgba(255, 255, 255, 0.8) 0%, rgba(248, 250, 252, 0.8) 100%);
-  width: 36px; /* ลดขนาด */
+  width: 36px;
   height: 36px;
   display: flex;
   align-items: center;
@@ -988,13 +987,13 @@ footer.footer {
   border: 1px solid rgba(59, 130, 246, 0.1);
   position: relative;
   z-index: 10;
-  margin: 0 4px; /* ลด margin */
+  margin: 0 4px;
 }
 
 @media (max-width: 480px) {
   .flatpickr-prev-month,
   .flatpickr-next-month {
-    width: 32px; /* ลดขนาดเพิ่มเติม */
+    width: 32px;
     height: 32px;
     font-size: 1.1rem;
     padding: 6px;
@@ -1021,16 +1020,16 @@ footer.footer {
   background: rgba(59, 130, 246, 0.05);
   border-radius: var(--border-radius-small);
   margin-bottom: 8px;
-  padding: 4px 0; /* เพิ่ม padding ด้านบนล่างเพิ่มเติม */
+  padding: 8px 0;
   display: flex;
   width: 100%;
-  align-items: center; /* จัดให้อยู่ตรงกลาง */
+  align-items: center;
 }
 
 .flatpickr-weekday {
   color: var(--secondary-blue);
   font-weight: 600;
-  font-size: 0.85rem; /* ลดขนาดเล็กน้อย */
+  font-size: 0.85rem;
   text-transform: uppercase;
   letter-spacing: 0.5px;
   width: 14.28571%;
@@ -1038,20 +1037,19 @@ footer.footer {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 15px; /* ลดความสูง */
+  height: 20px;
   line-height: 1;
-  padding: 0; /* ลบ padding ด้านบนล่าง */
+  padding: 0;
 }
 
 @media (max-width: 480px) {
   .flatpickr-weekday {
-    font-size: 0.7rem; /* ลดขนาดเพิ่มเติม */
-    height: 15px; /* ลดความสูงเพิ่มเติม */
+    font-size: 0.75rem;
+    height: 18px;
   }
   
   .flatpickr-weekdays {
-    padding: 10px 0; /* เพิ่ม padding ในมือถือ */
-    align-items: center; /* จัดให้อยู่ตรงกลาง */
+    padding: 6px 0;
   }
 }
 
@@ -1060,7 +1058,8 @@ footer.footer {
   min-width: 0;
   display: flex;
   flex-wrap: wrap;
-  padding: 0 2px; /* เพิ่ม padding เล็กน้อยเพื่อป้องกันการล้น */
+  padding: 0;
+  gap: 0; /* ลบ gap ออก */
 }
 
 .flatpickr-day {
@@ -1070,67 +1069,58 @@ footer.footer {
   font-weight: 500;
   position: relative;
   background: rgba(255, 255, 255, 0.8);
-  margin: 1px;
   
-  /* ปรับ Fixed grid layout ให้แน่นขึ้น */
-  width: calc(14.28571% - 2px) !important;
-  max-width: calc(14.28571% - 2px) !important;
-  min-width: calc(14.28571% - 2px) !important;
-  height: 36px; /* ลดความสูง */
-  line-height: 36px;
+  /* ปรับ Fixed grid layout ให้เต็มพื้นที่มากขึ้น */
+  width: 14.28571% !important;
+  max-width: 14.28571% !important;
+  min-width: 14.28571% !important;
+  height: 40px;
+  line-height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
   box-sizing: border-box;
-  float: left;
-  font-size: 13px;
+  margin: 0; /* ลบ margin */
+  border: 0.5px solid rgba(59, 130, 246, 0.1); /* เพิ่มเส้นขอบบาง */
+  font-size: 14px;
 }
 
-/* Responsive day sizing - ปรับให้แน่นขึ้น */
+/* Responsive day sizing - ปรับให้เต็มพื้นที่มากขึ้น */
 @media (max-width: 600px) {
   .flatpickr-day {
-    width: calc(14.28571% - 1.5px) !important;
-    max-width: calc(14.28571% - 1.5px) !important;
-    min-width: calc(14.28571% - 1.5px) !important;
-    height: 34px;
-    line-height: 34px;
-    font-size: 12px;
-    margin: 0.75px;
-  }
-  
-  .flatpickr-days {
-    padding: 0 1px;
+    width: 14.28571% !important;
+    max-width: 14.28571% !important;
+    min-width: 14.28571% !important;
+    height: 38px;
+    line-height: 38px;
+    font-size: 13px;
+    margin: 0;
   }
 }
 
 @media (max-width: 414px) {
   .flatpickr-day {
-    width: calc(14.28571% - 4px) !important;
-    max-width: calc(14.28571% - 1px) !important;
-    min-width: calc(14.28571% - 1px) !important;
-    height: 30px;
-    line-height: 30px;
-    font-size: 10px;
+    width: 14.28571% !important;
+    max-width: 14.28571% !important;
+    min-width: 14.28571% !important;
+    height: 35px;
+    line-height: 35px;
+    font-size: 12px;
     margin: 0;
-    padding: 0;
-  }
-
-  .flatpickr-days {
     padding: 0;
   }
 }
 
-
 /* Fix for very small screens */
 @media (max-width: 320px) {
   .flatpickr-day {
-    height: 26px;
-    line-height: 26px;
-    font-size: 10px;
-    margin: 0.25px;
-    width: calc(14.28571% - 0.5px) !important;
-    max-width: calc(14.28571% - 0.5px) !important;
-    min-width: calc(14.28571% - 0.5px) !important;
+    height: 32px;
+    line-height: 32px;
+    font-size: 11px;
+    margin: 0;
+    width: 14.28571% !important;
+    max-width: 14.28571% !important;
+    min-width: 14.28571% !important;
   }
   
   .flatpickr-calendar {
@@ -1206,6 +1196,7 @@ footer.footer {
     font-size: 16px; /* Prevents iOS zoom */
   }
 }
+
 /* Mobile Responsive */
 @media (max-width: 768px) {
   body {
