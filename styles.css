@@ -796,7 +796,7 @@ footer.footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 16px;
+  padding: 0 45px;
   width: 100%;
   box-sizing: border-box;
 }
@@ -813,12 +813,18 @@ footer.footer {
 
 @media (max-width: 430px) {
   .flatpickr-months {
-    padding: 0 8px;
+    padding: 0 44px;
     margin-bottom: 10px;
   }
   
   .flatpickr-month {
     font-size: 0.9rem;
+  }
+  
+  .flatpickr-current-month {
+    padding: 4px 8px;
+    margin: 0 2px;
+    min-width: 100px;
   }
 }
 
@@ -915,7 +921,9 @@ footer.footer {
   transition: all 0.3s ease;
   cursor: pointer;
   border: 1px solid rgba(59, 130, 246, 0.1);
-  margin: 0 8px;
+  margin: 0 4px;
+  min-width: 120px;
+  flex: 0 0 auto;
 }
 
 .flatpickr-current-month:hover {
@@ -937,7 +945,8 @@ footer.footer {
 @media (max-width: 430px) {
   .flatpickr-current-month {
     padding: 4px 8px;
-    margin: 0 6px;
+    margin: 0 2px;
+    min-width: 100px;
   }
   
   .flatpickr-monthDropdown-months {
@@ -1237,6 +1246,7 @@ footer.footer {
   }
 
 
+
   .input-group,
   .expenses-section,
   .result-section,
@@ -1455,35 +1465,7 @@ button:focus {
   }
 }
 
-/* Dark Mode Support (Optional) */
-@media (prefers-color-scheme: dark) {
-  :root {
-    --white: #1f2937;
-    --light-gray: #374151;
-    --primary-blue: #93c5fd;
-    --secondary-blue: #60a5fa;
-    --light-blue: #3b82f6;
-  }
-  
-  body {
-    background: linear-gradient(135deg, #111827 0%, #1f2937 25%, #374151 75%, #4b5563 100%);
-  }
-  
-  .container {
-    background: linear-gradient(145deg, rgba(31, 41, 55, 0.95) 0%, rgba(55, 65, 81, 0.9) 100%);
-    color: #f3f4f6;
-  }
-  
-  input, select {
-    background: rgba(31, 41, 55, 0.8);
-    color: #f3f4f6;
-    border-color: rgba(147, 197, 253, 0.3);
-  }
-  
-  .expense-item {
-    background: linear-gradient(135deg, rgba(31, 41, 55, 0.9) 0%, rgba(55, 65, 81, 0.7) 100%);
-  }
-}
+
 
 /* Enhanced Micro-Interactions */
 .expense-item:hover .btn-remove-expense {
