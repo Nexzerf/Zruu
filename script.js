@@ -263,7 +263,11 @@ function createNewExpenseItem(id) {
       <label><input type="radio" name="costMode${id}" value="daily" checked /> ต่อวัน</label>
       <label><input type="radio" name="costMode${id}" value="monthly" /> ต่อเดือน</label>
     </div>
-    <button class="btn-remove-expense">ลบ</button>
+<button class="btn-remove-expense">
+  <i class="fa-solid fa-trash"></i>
+</button>
+
+
   `;
 
   newItem.querySelectorAll('input').forEach(input => {
