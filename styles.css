@@ -522,9 +522,9 @@ input[type="range"]::-webkit-slider-thumb:hover {
 .btn-remove-expense {
   align-self: flex-end;
   background: linear-gradient(135deg, #fca5a5 0%, #ef4444 100%);
-  color: var(--white); /* สีตัวอักษรและไอคอน */
+  color: var(--white);
   border: none;
-  padding: 8px; /* ปรับให้เล็กลงให้เหมาะกับไอคอน */
+  padding: 8px; 
   border-radius: 20px;
   font-size: 1.2rem; /* เพิ่มขนาดไอคอน */
   font-weight: 600;
@@ -561,7 +561,7 @@ input[type="range"]::-webkit-slider-thumb:hover {
   color: var(--white);
   font-size: 1rem;
   line-height: 1;
-  display: flex;           /* เปลี่ยนจาก block เป็น flex */
+  display: flex;           
   align-items: center;     /* จัดกึ่งกลางแนวตั้ง */
   justify-content: center; /* จัดกึ่งกลางแนวนอน */
   margin: 0;               /* ลบ margin ทุกด้าน */
