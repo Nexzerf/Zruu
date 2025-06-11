@@ -1105,7 +1105,7 @@ footer.footer {
 
 @media (max-width: 414px) {
   .flatpickr-day {
-    width: calc(14.28571% - 1px) !important;
+    width: calc(14.28571% - 4px) !important;
     max-width: calc(14.28571% - 1px) !important;
     min-width: calc(14.28571% - 1px) !important;
     height: 30px;
