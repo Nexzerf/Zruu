@@ -174,8 +174,7 @@ function validateQRCode(file) {
           // พบ QR Code
           qrStatus.innerHTML = `
             <i class="fa-solid fa-check-circle"></i>
-            ✅ พบ QR Code ในรูปภาพแล้ว
-            <div class="qr-details">ข้อมูล QR: ${qrCode.data.substring(0, 50)}${qrCode.data.length > 50 ? '...' : ''}</div>
+            ตรวจพบ QR Code ในรูปภาพ
           `;
           qrStatus.className = "qr-status valid";
           resolve(true);
@@ -183,7 +182,7 @@ function validateQRCode(file) {
           // ไม่พบ QR Code
           qrStatus.innerHTML = `
             <i class="fa-solid fa-exclamation-triangle"></i>
-            ❌ ไม่พบ QR Code ในรูปภาพ
+            ไม่พบ QR Code ในรูปภาพ
             <div class="qr-details">กรุณาเลือกรูปสลิปที่มี QR Code ชัดเจน</div>
           `;
           qrStatus.className = "qr-status invalid";
@@ -194,7 +193,7 @@ function validateQRCode(file) {
       img.onerror = function() {
         qrStatus.innerHTML = `
           <i class="fa-solid fa-exclamation-triangle"></i>
-          ❌ ไม่สามารถอ่านรูปภาพได้
+          ไม่สามารถอ่านรูปภาพได้
           <div class="qr-details">กรุณาเลือกไฟล์รูปภาพที่ถูกต้อง</div>
         `;
         qrStatus.className = "qr-status invalid";
@@ -207,7 +206,7 @@ function validateQRCode(file) {
     reader.onerror = function() {
       qrStatus.innerHTML = `
         <i class="fa-solid fa-exclamation-triangle"></i>
-        ❌ ไม่สามารถอ่านไฟล์ได้
+        ไม่สามารถอ่านไฟล์ได้
       `;
       qrStatus.className = "qr-status invalid";
       resolve(false);
