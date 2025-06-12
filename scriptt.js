@@ -92,7 +92,7 @@ async function generatePromptPayQR() {
       container.innerHTML = `
         <div class="error-container">
           <i class="fa-solid fa-exclamation-triangle error-icon"></i>
-          <p class="error-text">เกิดข้อผิดพลาด: ${errorData.error || 'ไม่สามารถสร้าง QR Code ได้'}</p>
+          <p class="error-text">${'โปรดระบุจำนวนเงินก่อนโอน' || 'ไม่สามารถสร้าง QR Code ได้'}</p>
           <button onclick="showPromptPay()" class="retry-btn">ลองใหม่</button>
         </div>
       `;
