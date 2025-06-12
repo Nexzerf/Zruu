@@ -122,17 +122,17 @@ function showKbankInfo() {
       <div class="bank-details">
         <p class="bank-detail-item">
           <i class="fa-solid fa-credit-card"></i>
-          <span class="detail-label">เลขที่บัญชี:</span>
+          <span class="detail-label">เลขที่บัญชี :</span>
           <strong>1261900671</strong>
         </p>
         <p class="bank-detail-item">
           <i class="fa-solid fa-user"></i>
-          <span class="detail-label">ชื่อบัญชี:</span>
+          <span class="detail-label">ชื่อบัญชี :</span>
           <strong>ภานิชา ศรีกระจ่าง</strong>
         </p>
         <p class="bank-detail-item">
           <i class="fa-solid fa-building-columns"></i>
-          <span class="detail-label">ธนาคาร:</span>
+          <span class="detail-label">ธนาคาร :</span>
           <strong>กสิกรไทย</strong>
         </p>
       </div>
@@ -182,8 +182,7 @@ function validateQRCode(file) {
           // ไม่พบ QR Code
           qrStatus.innerHTML = `
             <i class="fa-solid fa-exclamation-triangle"></i>
-            ไม่พบ QR Code ในรูปภาพ
-            <div class="qr-details">กรุณาเลือกรูปสลิปที่มี QR Code ชัดเจน</div>
+            กรุณาเลือกรูปสลิปที่มี QR Code ชัดเจน
           `;
           qrStatus.className = "qr-status invalid";
           resolve(false);
@@ -193,8 +192,7 @@ function validateQRCode(file) {
       img.onerror = function() {
         qrStatus.innerHTML = `
           <i class="fa-solid fa-exclamation-triangle"></i>
-          ไม่สามารถอ่านรูปภาพได้
-          <div class="qr-details">กรุณาเลือกไฟล์รูปภาพที่ถูกต้อง</div>
+          กรุณาเลือกไฟล์รูปภาพที่ถูกต้อง
         `;
         qrStatus.className = "qr-status invalid";
         resolve(false);
