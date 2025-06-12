@@ -3,152 +3,149 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-  <title>Zruu</title>
+  <title>Zruu Donate</title>
   <link rel="icon" type="image/png" sizes="32x32" href="/icons/32.png" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <link href="https://fonts.googleapis.com/css2?family=Prompt&display=swap" rel="stylesheet" />
-<!-- โหลด CSS Flatpickr -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;600&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
 
+  <!-- เปิดโหมดเว็บแอพแบบเต็มหน้าจอ (ไม่มีแถบ URL) -->
+  <meta name="apple-mobile-web-app-capable" content="yes" />
 
-  <!-- ชื่อแอพสำหรับ iOS -->
-<meta name="apple-mobile-web-app-title" content="Zruu" />
+  <!-- สีของแถบสถานะ iOS (status bar) -->
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
-<!-- เปิดโหมดเว็บแอพแบบเต็มหน้าจอ (ไม่มีแถบ URL) -->
-<meta name="apple-mobile-web-app-capable" content="yes" />
+  <!-- Font Prompt -->
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;600;700&display=swap" rel="stylesheet" />
 
-<!-- สีของแถบสถานะ iOS (status bar) -->
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
-<!-- ไอคอนสำหรับเพิ่มหน้าเว็บลง Home Screen บนอุปกรณ์ iOS (ควรใช้ไฟล์ PNG แบบ square) -->
-<link rel="apple-touch-icon" href="/icons/apple.png" />
+  <!-- CSS -->
+  <link rel="stylesheet" href="style.css" />
+  
+  <!-- Additional CSS for QR validation -->
+  <style>
+    .qr-status {
+      margin-top: 10px;
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 500;
+    }
 
+    .qr-status.validating {
+      background-color: #fef3c7;
+      color: #92400e;
+      border: 1px solid #fbbf24;
+    }
 
+    .qr-status.valid {
+      background-color: #d1fae5;
+      color: #065f46;
+      border: 1px solid #10b981;
+    }
 
-<!-- (ถ้ามี) Manifest สำหรับ PWA -->
-<link rel="manifest" href="/manifest.json" />
+    .qr-status.invalid {
+      background-color: #fee2e2;
+      color: #991b1b;
+      border: 1px solid #ef4444;
+    }
 
-  <link rel="stylesheet" href="styles.css?v=2" />
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    .qr-validation-spinner {
+      display: inline-block;
+      animation: spin 1s linear infinite;
+      margin-right: 8px;
+    }
 
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .submit-slip-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      background-color: #6b7280;
+    }
+
+    .qr-details {
+      margin-top: 8px;
+      font-size: 12px;
+      opacity: 0.8;
+    }
+  </style>
 </head>
 <body>
-  <div class="container">
-    <h1>วางแผนการเงินรายเดือน</h1>
-
-    <div class="input-group">
-      <label for="monthlyBudget"><i class="fa-solid fa-coins"></i> งบประมาณรายเดือน (บาท)</label>
-      <input type="number" id="monthlyBudget" min="0" placeholder="เช่น 30000" />
-    </div>
-
-    <div class="input-group">
-      <label for="savingGoal"><i class="fa-solid fa-piggy-bank"></i> เป้าหมายการออม (บาท)</label>
-      <input type="number" id="savingGoal" min="0" placeholder="เช่น 5000" />
-    </div>
-
-<!-- ใส่ในส่วนของ HTML -->
-<div class="input-group">
-  <label for="daysInMonth">
-    <i class="fa-solid fa-calendar-days"></i> จำนวนวันในเดือน
-  </label>
-  <div class="input-wrapper">
-    <input type="number" id="daysInMonth" min="1" max="31" value="30" readonly />
-    <span class="calendar-icon" id="calendarTrigger">
-      <i class="fa-regular fa-calendar"></i>
+<header>
+  <img src="assets/zruu.png" class="logo" alt="Logo" />
+  <h1>Zruu Donate</h1>
+  <p>เพียงสแกน QR ด้านล่างเพื่อสนับสนุนเรา</p>
+  <button onclick="openModal()" class="donate-button">
+    สนับสนุนตอนนี้ 
+    <span class="rocket-container">
+      <i class="fa-solid fa-rocket"></i>
+      <span class="flame"></span> <!-- ไฟท้าย -->
     </span>
-  </div>
-</div>
+  </button>
+</header>
 
+<!-- Modal -->
+<div class="modal" id="donateModal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <h2>เลือกช่องทางการสนับสนุน</h2>
 
-    <div class="expenses-section">
-      <h2><i class="fa-solid fa-list-check"></i> หมวดค่าใช้จ่ายต่อเดือน</h2>
-      <div id="expenseList">
-        <!-- เริ่มด้วยค่าอาหาร -->
-        <div class="expense-item">
-          <input type="text" class="expense-name" value="ค่าอาหาร" />
-          <div class="meal-option">
-            <label><input type="radio" name="mealCalc0" value="manual" checked /> ระบุเอง</label>
-            <label><input type="radio" name="mealCalc0" value="auto" /> คำนวณอัตโนมัติ</label>
-          </div>
-          <div class="meal-costs">
-            <input type="number" class="meal-cost" placeholder="เช้า" min="0" />
-            <input type="number" class="meal-cost" placeholder="กลางวัน" min="0" />
-            <input type="number" class="meal-cost" placeholder="เย็น" min="0" />
-          </div>
+    <div class="qr-grid">
+      <div class="qr-box" onclick="showPromptPay()">
+        <i class="fa-solid fa-qrcode"></i> PromptPay
+      </div>
+
+      <div class="qr-box" onclick="showKbankInfo()">
+        <i class="fa-solid fa-building-columns"></i>บัญชีธนาคาร
+        <p><i class="fa-solid fa-building-columns"></i> ธ.กสิกรไทย</p>
+      </div>
+    </div>
+
+    <!-- อัปโหลดสลิป -->
+    <div class="slip-upload-section">
+      <label for="slipUpload" class="upload-label">
+        <i class="fa-solid fa-upload"></i> แนบสลิปของคุณ
+      </label>
+      <input type="file" id="slipUpload" accept="image/*" />
+      <span id="file-name" style="display: block; margin-top: 10px; color: #93c5fd; font-size: 14px;"></span>
+      
+      <!-- QR Status Display -->
+      <div id="qr-status" class="qr-status" style="display: none;"></div>
+
+      <button onclick="submitSlip()" class="submit-slip-btn" id="submitBtn" disabled>
+        <i class="fa-solid fa-paper-plane"></i> ส่งสลิป
+      </button>
+    </div>
+
+    <!-- Popup ขอบคุณ -->
+    <div id="successPopup" class="popup-container">
+      <div class="popup-content">
+        <div class="checkmark">
+          <i class="fa-solid fa-check"></i>
         </div>
-      </div>
-      <button id="addExpenseBtn"><i class="fa-solid fa-plus"></i> เพิ่มหมวดใหม่</button>
-    </div>
-
-    <div class="result-section">
-      <h2><i class="fa-solid fa-chart-simple"></i> ผลลัพธ์</h2>
-  <p><i class="fa-solid fa-coins"></i> งบประมาณทั้งหมด : <span id="totalBudget">0</span> บาท</p>
-  <p><i class="fa-solid fa-calendar-days"></i> จำนวนวัน : <span id="daysDisplay">30</span> วัน</p>
-  <p><i class="fa-solid fa-list"></i> รวมค่าใช้จ่ายย่อย : <span id="totalExpenses">0</span> บาท</p>
-  <p><i class="fa-solid fa-calculator"></i> งบหลังหักออม : <span id="netBudget">0</span> บาท</p>
-  <p><i class="fa-solid fa-wallet"></i> ยอดเงินคงเหลือ : <span id="remainingBalance">0</span> บาท</p>
-  <p><i class="fa-solid fa-calendar-day"></i> เงินใช้ได้ต่อวัน : <span id="dailyBudget">0</span> บาท</p>
-  <p><i class="fa-solid fa-bowl-food"></i> ค่าข้าวต่อวัน : <span id="foodDaily">-</span> บาท</p>
-  <p><i class="fa-solid fa-utensils"></i> ค่าข้าวต่อมื้อ : <span id="foodPerMeal">-</span> บาท</p>
-
-
-    </div>
-
-    <div class="chart-section">
-      <h2><i class="fa-solid fa-chart-pie"></i> กราฟค่าใช้จ่าย</h2>
-      <div class="chart-container">
-  <canvas id="expenseChart" width="400" height="400"></canvas>
-</div>
-    </div>
-  </div>
-
-  <script src="script.js?v=2"></script>
-  <script>
-  document.addEventListener('contextmenu', event => event.preventDefault());
-  document.addEventListener('copy', event => event.preventDefault());
-</script>
-<footer class="footer">
-  <div class="footer-content">
-    <div class="app-name">
-      <img src="assets/zruu.png" alt="Zruu Logo" class="logo">
-      <span class="brand">Zruu</span> · พัฒนาโดย <span class="author">SNiPER144</span>
-    </div>
-    <div class="donate">
-      <p>สนับสนุนเรา</p>
-      <div class="donate-methods">
-        <span>
-          <img src="assets/zruu.png" alt="Donate Me">
-          <a href="donate.html" target="_blank">Donate Me</a>
-        </span>
-        <span>
-            <p>ช่องทางการติดต่อ</p>
-          <img src="assets/ig.png" alt="nama1n9">
-          <a href="https://www.instagram.com/nama1n9/" target="_blank">nama1n9</a>
-        </span>
+        <h2>ขอบคุณสำหรับการสนับสนุน</h2>
+        <p>เราจะตรวจสอบสลิปของคุณโดยเร็วที่สุด</p>
+        <button onclick="closePopup()" class="close-btn">ปิด</button>
       </div>
     </div>
-  </div>
-</footer>
 
+    <!-- เสียง -->
+    <audio id="successSound" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_20a5e6032b.mp3?filename=success-1-6297.mp3"></audio>
+
+    <!-- Container แสดงข้อมูล dynamic -->
+    <div id="dynamicContent" class="dynamic-content"></div>
+  </div>
 </div>
 
+<!-- jsQR Library for QR Code Detection -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jsqr/1.4.0/jsQR.min.js"></script>
+
+<!-- JS -->
+<script src="scriptt.js"></script>
 </body>
-
-<script>
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('/service-worker.js')
-        .then(reg => console.log('✅ Service Worker registered:', reg.scope))
-        .catch(err => console.error('❌ Service Worker registration failed:', err));
-    });
-  }
-</script>
-<!-- JS Flatpickr -->
-<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-<script src="https://cdn.jsdelivr.net/npm/flatpickr@4.6.13/dist/l10n/th.js"></script>
-
-
 </html>
