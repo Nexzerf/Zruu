@@ -128,7 +128,7 @@ function showKbankInfo() {
         <p class="bank-detail-item">
           <i class="fa-solid fa-user"></i>
           <span class="detail-label">ชื่อบัญชี :</span>
-          <strong>ภานิชา ศรีกระจ่าง</strong>
+          <strong>ภานิชา</strong>
         </p>
         <p class="bank-detail-item">
           <i class="fa-solid fa-building-columns"></i>
